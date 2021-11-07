@@ -2,7 +2,7 @@
   <form class="add-words" @submit.prevent="addWordHandler">
     <div class="add-words__field">
       <label class="add-words__label" for="word">Слово</label>
-      <b-form-input id="word" v-model="word" trim placeholder="Hello"/>
+      <b-form-input id="word" v-model="word" trim placeholder="Hello" />
       <b-alert
         :show="!isValid && !$v.word.required"
         variant="danger"
@@ -29,7 +29,36 @@
     </div>
     <div class="add-words__field">
       <label class="add-words__label" for="transcription">Транскрипция</label>
-      <b-form-input id="transcription" v-model="transcription" trim />
+      <b-form-input
+        id="transcription"
+        v-model="transcription"
+        trim
+        placeholder="Хелло"
+      />
+    </div>
+    <div class="add-words__field">
+      <label class="add-words__label" for="transcription"
+        >Введите url картинки</label
+      >
+      <home-links-list :linksList="arrImageUrls" @removeLink="removeLink"/>
+      <b-input
+        trim
+        placeholder="http://example.jpg"
+        v-model="imageUrl"
+        class="mt-1"
+      ></b-input>
+      <b-button @click="addImageUrl" variant="outline-primary" class="mt-3"
+        >Добавить url</b-button
+      >
+    </div>
+    <div class="add-words__field">
+      <label class="add-words__label" for="transcription">Описание</label>
+      <b-textarea
+        v-model="description"
+        size="sm"
+        class="add-words__description"
+        placeholder="Описание..."
+      />
     </div>
     <div class="add-words__field">
       <b-button variant="primary" type="submit">Добавить слово</b-button>
@@ -39,14 +68,19 @@
 
 <script>
 import { required } from "vuelidate/lib/validators";
+import HomeLinksList from './HomeLinksList.vue';
 
 export default {
+  components: { HomeLinksList },
   name: "HomeAddWords",
   data() {
     return {
       word: "",
       translate: "",
       transcription: "",
+      description: "",
+      imageUrl: "",
+      arrImageUrls: [],
       isValid: true,
     };
   },
@@ -59,6 +93,9 @@ export default {
     },
   },
   methods: {
+    removeLink(index) {
+      this.arrImageUrls.splice(index, 1);
+    },
     addWordHandler() {
       if (!this.$v.word.required || !this.$v.translate.required) {
         this.isValid = false;
@@ -70,11 +107,18 @@ export default {
         word: this.word,
         translate: this.translate,
         transcription: this.transcription,
+        description: this.description,
       };
       this.$store.dispatch("addWord", formData);
       this.word = "";
       this.transcription = "";
       this.translate = "";
+      this.description = "";
+    },
+    addImageUrl() {
+      this.arrImageUrls.push(this.imageUrl);
+      this.imageUrl = "";
+      console.log(this.arrImageUrls);
     },
   },
 };
