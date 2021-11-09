@@ -108,17 +108,23 @@ export default {
         translate: this.translate,
         transcription: this.transcription,
         description: this.description,
+        imageUrls: this.arrImageUrls,
       };
       this.$store.dispatch("addWord", formData);
       this.word = "";
       this.transcription = "";
       this.translate = "";
       this.description = "";
+      this.arrImageUrls = [];
     },
     addImageUrl() {
-      this.arrImageUrls.push(this.imageUrl);
-      this.imageUrl = "";
-      console.log(this.arrImageUrls);
+      if (!this.arrImageUrls.includes(this.imageUrl)) {
+        this.arrImageUrls.push(this.imageUrl);
+        this.imageUrl = "";
+      } else {
+        alert("Вы уже добвили такой url");
+        this.imageUrl = "";
+      }
     },
   },
 };

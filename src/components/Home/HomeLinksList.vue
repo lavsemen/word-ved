@@ -2,9 +2,9 @@
   <div class="links-list">
     <div
       class="links-list__link"
-      v-for="(link, index) in linksList"
+      v-for="(link, index) in shortLinkList"
       @click="$emit('removeLink', index)"
-      :key="link"
+      :key="link + Math.random(10)"
     >
       {{ link }}
     </div>
@@ -18,6 +18,17 @@ export default {
   props: {
     linksList: Array,
   },
+  computed: {
+    shortLinkList() {
+      return this.linksList.map(link => {
+        if (link.length > 30) {
+          return link.slice(0, 30) + '...';
+        } else {
+          return link;
+        }
+      });
+    }
+  }
 };
 </script>
 
