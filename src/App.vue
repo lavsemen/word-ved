@@ -10,6 +10,6 @@
 <script>
 import AppNavbar from "@/components/AppNavbar";
 export default {
-  components: {AppNavbar}
+  components: { AppNavbar },
 }
 </script>

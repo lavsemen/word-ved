@@ -5,7 +5,8 @@ import router from "./router";
 import store from "./store";
 import Vuelidate from "vuelidate";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-import './app.scss'
+import "./app.scss";
+// import "./swiper.min.css";
 
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
